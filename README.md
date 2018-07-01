@@ -1,22 +1,22 @@
 # mrtlib
 
-A library for Dart developers.
+A simple library help to find routes in Taipei MRT.
 
 Created from templates made available by Stagehand under a BSD-style
 [license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
 
 ## Usage
 
-A simple usage example:
+To the the library, you can create a new instance of `MRTMap`.
 
-    import 'package:mrtlib/mrtlib.dart';
+``` dart
+final map = new MRTMap();
+```
 
-    main() {
-      var awesome = new Awesome();
-    }
+Then, you can input two stations and find all possible routes between them.
 
-## Features and bugs
+``` dart
+final routes = map.findRoutes('大安', '忠孝復興');
+```
 
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-[tracker]: http://example.com/issues/replaceme
+That's all!

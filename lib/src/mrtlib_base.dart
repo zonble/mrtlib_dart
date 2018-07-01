@@ -6,8 +6,7 @@ class MRTExit {
   List<MRTLink> links = [];
   MRTExit(this.name);
   addLink(String routeID, MRTExit to) {
-    final link = new MRTLink(routeID, to);
-    this.links.add(link);
+    this.links.add(new MRTLink(routeID, to));
   }
 }
 
@@ -15,18 +14,20 @@ class MRTLink {
   String routeID;
   MRTExit to;
   MRTLink(this.routeID, this.to);
+
+  toString() {
+    return '-${this.routeID}-> ${this.to.name}';
+  }
 }
 
 class MRTRoute {
   MRTExit from;
   List<MRTLink> links;
   String _description = '';
-  int get stationCount => this.links.length;
-  int transionCount = 0;
+  int get transitCount => this.links.length;
+  int mrtStationCount = 0;
 
-  MRTRoute(MRTExit from, List<MRTLink> links) {
-    this.from = from;
-    this.links = links;
+  MRTRoute(MRTExit this.from, List<MRTLink> this.links) {
     this._description = from.name;
     String lastRouteID = this.links[0].routeID;
     if (this.links.length < 2) {
@@ -38,7 +39,7 @@ class MRTRoute {
       MRTLink link = this.links[x];
       if (link.routeID != lastRouteID) {
         this._description += ' -${lastRouteID}-> ${this.links[x - 1].to.name}';
-        transionCount++;
+        mrtStationCount++;
       }
       lastRouteID = link.routeID;
     }
@@ -52,14 +53,14 @@ class MRTRoute {
   }
 
   int compareTo(MRTRoute anotherRoute) {
-    if (anotherRoute.stationCount > this.stationCount) {
+    if (anotherRoute.transitCount > this.transitCount) {
       return -1;
-    } else if (anotherRoute.stationCount < this.stationCount) {
+    } else if (anotherRoute.transitCount < this.transitCount) {
       return 1;
     }
-    if (anotherRoute.transionCount > this.transionCount) {
+    if (anotherRoute.mrtStationCount > this.mrtStationCount) {
       return -1;
-    } else if (anotherRoute.transionCount < this.transionCount) {
+    } else if (anotherRoute.mrtStationCount < this.mrtStationCount) {
       return 1;
     }
     return 0;
@@ -93,7 +94,7 @@ class MRTMap {
   }
 
   List<MRTRoute> findRoutes(String from, String to) {
-    if (from == null) { 
+    if (from == null) {
       throw new Exception('from is null');
     } else if (to == null) {
       throw new Exception('to is null');
